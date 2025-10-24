@@ -119,14 +119,16 @@ Implements `StackInterface<T>` (LIFO).
 **Methods**
 
 
-| Method | Action |
-| :-- | :-- |
-| `push(const T&)` | Push at top; doubles capacity if full |
-| `pop()` | Removes the last inserted element |
-| `peek() const` | Returns top element |
-| `getSize()` | Returns element count |
-| `PrintForward()` | Prints stack from bottom to top |
-| `PrintReverse()` | Prints stack from top to bottom |
+| Method                           | Action                                                                                             |
+|:---------------------------------|:---------------------------------------------------------------------------------------------------|
+| `ABS()`                          | Default Constructor. Default `capacity_` to 1, <br/>`size_` to 0, and create buffer array `data_`. |
+| `ABS(const std::size_t capacity)`| Parameterized Constructor. Same behavior as default, <br/>however set `capacity_` to `capacity`    | 
+| `push(const T&)`                 | Push at top; doubles capacity if full                                                              |
+| `pop()`                          | Removes the last inserted element                                                                  |
+| `peek() const`                   | Returns top element                                                                                |
+| `getSize()`                      | Returns element count                                                                              |
+| `PrintForward()`                 | Prints stack from bottom to top                                                                    |
+| `PrintReverse()`                 | Prints stack from top to bottom                                                                    |
 
 All resizing operations double capacity (scale factor = 2).
 **Big 5** required to handle possible reallocations.
@@ -147,14 +149,16 @@ Implements `QueueInterface<T>` (FIFO).
 **Methods**
 
 
-| Method | Description |
-| :-- | :-- |
-| `enqueue(const T&)` | Adds element to back |
-| `dequeue()` | Removes from front |
-| `peek()` | Returns front element |
-| `getSize()` | Returns size |
-| `PrintForward()` | Print front-to-back contents |
-| `PrintReverse()` | Print in reverse order |
+| Method                            | Description                                                                                        |
+|:----------------------------------|:---------------------------------------------------------------------------------------------------|
+| `ABQ()`                           | Default Constructor. Default `capacity_` to 1, <br/>`size_` to 0, and create buffer array `data_`. |
+| `ABQ(const std::size_t capacity)` | Parameterized Constructor. Same behavior as default, <br/>however set `capacity_` to `capacity`    | 
+| `enqueue(const T&)`               | Adds element to back                                                                               |
+| `dequeue()`                       | Removes from front                                                                                 |
+| `peek()`                          | Returns front element                                                                              |
+| `getSize()`                       | Returns size                                                                                       |
+| `PrintForward()`                  | Print front-to-back contents                                                                       |
+| `PrintReverse()`                  | Print in reverse order                                                                             |
 
 
 ***
@@ -252,15 +256,17 @@ Implements **DequeInterface<T>** using a **circular buffer** model.
 
 ### **Methods**
 
-| Operation | Explanation |
-| :-- | :-- |
-| `pushFront()` / `pushBack()` | Insert element from either end |
-| `popFront()` / `popBack()` | Remove element from either end |
-| `front()` / `back()` | Access extremities |
-| `ensureCapacity()` | Resizes to `capacity_ * 2` |
-| `shrinkIfNeeded()` | Reduces to half when sparse |
-| `PrintForward()` | Traverses queue order |
-| `PrintReverse()` | Traverses reverse order |
+| Operation                          | Explanation                                                                                                                        |
+|:-----------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------|
+| `ABDQ()`                           | Default Constructor. Default `capacity_` to 4, <br/>`size_` to 0, `front_` and `back_` to 0, and <br/>create buffer array `data_`. |
+| `ABDQ(const std::size_t capacity)` | Parameterized Constructor. Same behavior as default, <br/>however set `capacity_` to `capacity`                                    |
+| `pushFront()` / `pushBack()`       | Insert element from either end                                                                                                     |
+| `popFront()` / `popBack()`         | Remove element from either end                                                                                                     |
+| `front()` / `back()`               | Access extremities                                                                                                                 |
+| `ensureCapacity()`                 | Resizes to `capacity_ * 2`                                                                                                         |
+| `shrinkIfNeeded()`                 | Reduces to half when sparse                                                                                                        |
+| `PrintForward()`                   | Traverses queue order                                                                                                              |
+| `PrintReverse()`                   | Traverses reverse order                                                                                                            |
 
 **All array-based classes must implement the Big 5** to safely transfer `data_` ownership during copies and moves.
 
@@ -279,8 +285,7 @@ Implements **DequeInterface<T>** using a **circular buffer** model.
         ┌─────────┼────────────────────┐
         │          │                    │
    Array-Based   Linked-List           Deque
-     (ABS/ABQ)   (LLS/LLQ)     ┌───────┬────────┐
-                                │ ABDQ  │ LLDQ   │
+     (ABS/ABQ)   (LLS/LLQ)          (LLDQ/ABDQ)
 ```
 
 
@@ -297,53 +302,9 @@ Implements **DequeInterface<T>** using a **circular buffer** model.
 2. **LinkedList-based classes** should **delegate these for internal list members**:
     - The contained `LinkedList<T>` handles its Big Five.
     - Derived objects correctly follow composition semantics.
-3. **Print methods required in every class**:
-    - `PrintForward()`
-    - `PrintReverse()`
 These functions enhance debugging and visual validation for every ADT.
-4. **Interfaces define contract, not storage.**
+3. **Interfaces define contract, not storage.**
 None of the interfaces inherit `LinkedList<T>` — instead, concrete `LLS`, `LLQ`, and `LLDQ` **include** a list as a private attribute.
 
 ***
-
-## **8. Deliverable Goals**
-
-By the end of this lab, you should:
-
-- Implement **safe, reusable ADTs** leveraging polymorphism and composition.
-- Demonstrate understanding of the **Rule of Five** for class lifecycle control.
-- Extend each class with directional printing via `PrintForward()` and `PrintReverse()`.
-- Maintain **constant-time access patterns** for all primary operations.
-
-***
-
-## **References**
-
-- [GeeksForGeeks — Rule of Five in C++][^1]
-- [CppReference — Rule of Three/Five/Zero][^4]
-- [Fluent C++ — Compiler-Generated Functions][^8]
-
-***
-
-**Summary:**
-This lab bridges the gap between data abstraction and implementation detail in C++. You are expected to respect proper memory management, polymorphic inheritance, and the Rule of Five across all ADTs while reinforcing traversal output through the universal `PrintForward()` and `PrintReverse()` utility functions.
-<span style="display:none">[^2][^3][^5][^6][^7]</span>
-
-<div align="center">⁂</div>
-
-[^1]: https://www.geeksforgeeks.org/cpp/rule-of-five-in-cpp/
-
-[^2]: https://stackoverflow.com/questions/5976459/how-to-actually-implement-the-rule-of-five
-
-[^3]: https://www.codementor.io/@sandesh87/the-rule-of-five-in-c-1pdgpzb04f
-
-[^4]: http://en.cppreference.com/w/cpp/language/rule_of_three.html
-
-[^5]: https://learncplusplus.org/what-is-the-rule-of-five-in-modern-c/
-
-[^6]: https://www.reddit.com/r/cpp_questions/comments/11jpv13/what_are_the_implications_of_the_the_rule_of_5/
-
-[^7]: https://leimao.github.io/blog/CPP-Rule-of-Five/
-
-[^8]: https://www.fluentcpp.com/2019/04/19/compiler-generated-functions-rule-of-three-and-rule-of-five/
 
